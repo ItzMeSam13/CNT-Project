@@ -85,7 +85,7 @@ export default function MonthlyChart({ expenses }: MonthlyChartProps) {
                 fontSize: "13px",
                 color: "#E8EAF0",
               }}
-              formatter={(value: any) => [`₹${Number(value).toLocaleString("en-IN")}`, "Total"]}
+              formatter={(value: number) => [`₹${Number(value).toLocaleString("en-IN")}`, "Total"]}
             />
             <Bar
               dataKey="total"

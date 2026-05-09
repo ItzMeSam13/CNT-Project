@@ -75,7 +75,7 @@ export default function CategoryChart({ expenses }: CategoryChartProps) {
                 fontSize: "13px",
                 color: "#E8EAF0",
               }}
-              formatter={(value: any) => [`₹${Number(value).toLocaleString("en-IN")}`, ""]}
+              formatter={(value: number) => [`₹${Number(value).toLocaleString("en-IN")}`, ""]}
             />
           </PieChart>
         </ResponsiveContainer>
