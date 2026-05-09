@@ -75,7 +75,8 @@ export default function CategoryChart({ expenses }: CategoryChartProps) {
                 fontSize: "13px",
                 color: "#E8EAF0",
               }}
-              formatter={(value: number) => [`₹${Number(value).toLocaleString("en-IN")}`, ""]}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              formatter={(value: any) => [`₹${Number(value).toLocaleString("en-IN")}`, ""]}
             />
           </PieChart>
         </ResponsiveContainer>
