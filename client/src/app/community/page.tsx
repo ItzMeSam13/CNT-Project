@@ -165,7 +165,8 @@ export default function CommunityPage() {
                         boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
                       }}
                       itemStyle={{ color: "#E2E8F0" }}
-                      formatter={(value: number) => [
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      formatter={(value: any) => [
                         `₹${Number(value).toLocaleString("en-IN")}`,
                         "Avg.",
                       ]}
