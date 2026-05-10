@@ -41,11 +41,11 @@ export default function MonthlyChart({ expenses }: MonthlyChartProps) {
 
   if (data.length === 0) {
     return (
-      <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6">
-        <h3 className="font-['Syne'] text-lg font-bold text-[#E8EAF0] mb-4">
+      <div className="glass-card rounded-2xl p-6">
+        <h3 className="font-['Outfit'] text-lg font-bold text-white mb-4">
           Monthly Spending
         </h3>
-        <p className="text-sm text-[#4A5568] text-center py-8">
+        <p className="text-sm text-[#475569] text-center py-8">
           No data yet. Your spending trends will appear here.
         </p>
       </div>
@@ -53,8 +53,8 @@ export default function MonthlyChart({ expenses }: MonthlyChartProps) {
   }
 
   return (
-    <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6">
-      <h3 className="font-['Syne'] text-lg font-bold text-[#E8EAF0] mb-4">
+    <div className="glass-card rounded-2xl p-6 hover:shadow-[0_8px_32px_rgba(139,92,246,0.06)] transition-shadow duration-300">
+      <h3 className="font-['Outfit'] text-lg font-bold text-white mb-4">
         Monthly Spending
       </h3>
       <div className="h-[220px]">
@@ -62,37 +62,45 @@ export default function MonthlyChart({ expenses }: MonthlyChartProps) {
           <BarChart data={data} barSize={32}>
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke="rgba(255,255,255,0.05)"
+              stroke="rgba(139,92,246,0.06)"
               vertical={false}
             />
             <XAxis
               dataKey="month"
-              tick={{ fill: "#8892A4", fontSize: 12 }}
+              tick={{ fill: "#CBD5E1", fontSize: 13, fontWeight: 500 }}
               axisLine={false}
               tickLine={false}
             />
             <YAxis
-              tick={{ fill: "#8892A4", fontSize: 12 }}
+              tick={{ fill: "#CBD5E1", fontSize: 12, fontWeight: 500 }}
               axisLine={false}
               tickLine={false}
               tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}k`}
             />
             <Tooltip
+              cursor={{ fill: "rgba(139, 92, 246, 0.05)" }}
               contentStyle={{
-                background: "#0D1117",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "10px",
+                background: "#0F1629",
+                border: "1px solid rgba(139,92,246,0.3)",
+                borderRadius: "12px",
                 fontSize: "13px",
-                color: "#E8EAF0",
+                color: "#E2E8F0",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
               }}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               formatter={(value: any) => [`₹${Number(value).toLocaleString("en-IN")}`, "Total"]}
             />
             <Bar
               dataKey="total"
-              fill="#00C896"
-              radius={[6, 6, 0, 0]}
+              fill="url(#barGradient)"
+              radius={[8, 8, 0, 0]}
             />
+            <defs>
+              <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#8B5CF6" />
+                <stop offset="100%" stopColor="#06D6A0" />
+              </linearGradient>
+            </defs>
           </BarChart>
         </ResponsiveContainer>
       </div>

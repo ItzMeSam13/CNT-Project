@@ -25,16 +25,18 @@ export default function ExpenseForm({ onSubmit, loading }: ExpenseFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-2xl border border-white/[0.1] bg-[#080B14] shadow-2xl p-6"
+      className="glass-card rounded-2xl p-6 relative overflow-hidden"
     >
-      <h3 className="font-['Syne'] text-lg font-bold text-[#E8EAF0] mb-5 flex items-center gap-2">
-        <Plus size={18} className="text-[#00C896]" />
+      <h3 className="font-['Outfit'] text-lg font-bold text-white mb-5 flex items-center gap-2.5">
+        <div className="w-8 h-8 rounded-xl bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 flex items-center justify-center">
+          <Plus size={16} className="text-[#8B5CF6]" />
+        </div>
         Add Expense
       </h3>
 
       {/* Category selector */}
-      <div className="mb-4">
-        <label className="block text-xs font-medium text-[#8892A4] mb-2 tracking-wide uppercase">
+      <div className="mb-5">
+        <label className="block text-xs font-semibold text-[#94A3B8] mb-2.5 tracking-wider uppercase">
           Category
         </label>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -43,10 +45,10 @@ export default function ExpenseForm({ onSubmit, loading }: ExpenseFormProps) {
               type="button"
               key={cat}
               onClick={() => setCategory(cat)}
-              className={`flex items-center gap-2 px-2 py-2.5 rounded-xl text-xs sm:text-sm font-medium border transition-all cursor-pointer overflow-hidden ${
+              className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium border transition-all duration-300 cursor-pointer overflow-hidden ${
                 category === cat
-                  ? "border-[#00C896]/40 bg-[#00C896]/10 text-[#00C896]"
-                  : "border-white/[0.07] bg-white/[0.02] text-[#8892A4] hover:border-white/[0.12]"
+                  ? "border-[#8B5CF6]/50 bg-[#8B5CF6]/15 text-[#A78BFA] shadow-[0_0_20px_rgba(139,92,246,0.15)] scale-[1.02]"
+                  : "border-[#1E293B] bg-[#060918]/60 text-[#94A3B8] hover:border-[#8B5CF6]/30 hover:text-white hover:bg-[#060918]/80"
               }`}
             >
               <span className="text-sm sm:text-base shrink-0">{CATEGORY_ICONS[cat]}</span>
@@ -60,7 +62,7 @@ export default function ExpenseForm({ onSubmit, loading }: ExpenseFormProps) {
       <div className="mb-4">
         <label
           htmlFor="expense-amount"
-          className="block text-xs font-medium text-[#8892A4] mb-2 tracking-wide uppercase"
+          className="block text-xs font-semibold text-[#94A3B8] mb-2.5 tracking-wider uppercase"
         >
           Amount (₹)
         </label>
@@ -72,7 +74,7 @@ export default function ExpenseForm({ onSubmit, loading }: ExpenseFormProps) {
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Enter amount"
           required
-          className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#E8EAF0] text-sm font-normal outline-none transition-all placeholder:text-[#4A5568] focus:border-[#00C896]/50 focus:bg-[#00C896]/[0.03] focus:shadow-[0_0_0_3px_rgba(0,200,150,0.08)]"
+          className="w-full px-4 py-3 rounded-xl bg-[#0F1629] border border-[#1E293B] text-white text-sm font-normal outline-none transition-all duration-300 placeholder:text-[#475569] focus:border-[#8B5CF6]/50 focus:bg-[#8B5CF6]/[0.03] focus:shadow-[0_0_0_3px_rgba(139,92,246,0.08)]"
         />
       </div>
 
@@ -80,7 +82,7 @@ export default function ExpenseForm({ onSubmit, loading }: ExpenseFormProps) {
       <div className="mb-5">
         <label
           htmlFor="expense-note"
-          className="block text-xs font-medium text-[#8892A4] mb-2 tracking-wide uppercase"
+          className="block text-xs font-semibold text-[#94A3B8] mb-2.5 tracking-wider uppercase"
         >
           Note (optional)
         </label>
@@ -90,7 +92,7 @@ export default function ExpenseForm({ onSubmit, loading }: ExpenseFormProps) {
           value={note}
           onChange={(e) => setNote(e.target.value)}
           placeholder="What was this for?"
-          className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#E8EAF0] text-sm font-normal outline-none transition-all placeholder:text-[#4A5568] focus:border-[#00C896]/50 focus:bg-[#00C896]/[0.03] focus:shadow-[0_0_0_3px_rgba(0,200,150,0.08)]"
+          className="w-full px-4 py-3 rounded-xl bg-[#0F1629] border border-[#1E293B] text-white text-sm font-normal outline-none transition-all duration-300 placeholder:text-[#475569] focus:border-[#8B5CF6]/50 focus:bg-[#8B5CF6]/[0.03] focus:shadow-[0_0_0_3px_rgba(139,92,246,0.08)]"
         />
       </div>
 
@@ -98,12 +100,19 @@ export default function ExpenseForm({ onSubmit, loading }: ExpenseFormProps) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#00C896] to-[#00A87A] text-[#080B14] text-sm font-semibold border-0 cursor-pointer transition-all hover:translate-y-[-1px] hover:shadow-[0_8px_32px_rgba(0,200,150,0.3)] disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-none"
+        className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] text-white text-sm font-semibold border-0 cursor-pointer transition-all duration-300 hover:translate-y-[-1px] hover:shadow-[0_12px_32px_rgba(139,92,246,0.35)] disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-none"
       >
-        {loading ? "Encrypting & Saving..." : "Add Expense →"}
+        {loading ? (
+          <span className="inline-flex items-center gap-2.5">
+            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            Encrypting & Saving...
+          </span>
+        ) : (
+          "Add Expense →"
+        )}
       </button>
 
-      <p className="text-center text-xs text-[#4A5568] mt-3">
+      <p className="text-center text-xs text-[#475569] mt-3 font-medium">
         Amount will be encrypted using OU cryptosystem
       </p>
     </form>
