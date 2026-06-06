@@ -6,11 +6,12 @@ import { usePathname } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAuth } from "@/hooks/useAuth";
-import { LogOut, LayoutDashboard, Users, Info, Menu, X } from "lucide-react";
+import { LogOut, LayoutDashboard, Users, Info, Menu, X, Play } from "lucide-react";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/community", label: "Community", icon: Users },
+  { href: "/playground", label: "Playground", icon: Play },
   { href: "/about", label: "About OU", icon: Info },
 ];
 

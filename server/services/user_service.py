@@ -7,6 +7,7 @@ from db.firestore import get_user_doc, create_user_doc, update_user_doc, get_use
 from crypto.ou_keygen import get_keys, get_public_key, get_private_key
 from crypto.ou_encrypt import encrypt
 from crypto.ou_decrypt import decrypt
+from crypto.ou_homomorphic import homomorphic_add
 
 
 def get_or_create_user(uid: str, email: str) -> dict:
@@ -35,13 +36,15 @@ def get_user_profile(uid: str) -> dict | None:
     else:
         user["monthlyIncome"] = 0
 
-    # Compute total expenses by decrypting all
+    # Compute total expenses by homomorphically adding first, then a single decryption
     expenses = get_user_expenses(uid)
-    total_exp = 0
-    for exp in expenses:
-        enc_amt = exp.get("encryptedAmount")
-        if enc_amt:
-            total_exp += decrypt(enc_amt, private_key, public_key)
+    enc_expenses = [exp.get("encryptedAmount") for exp in expenses if exp.get("encryptedAmount")]
+    
+    if enc_expenses:
+        agg_exp = homomorphic_add(enc_expenses, public_key)
+        total_exp = decrypt(agg_exp, private_key, public_key)
+    else:
+        total_exp = 0
 
     user["totalExpenses"] = total_exp
     user["totalSavings"] = max(0, user["monthlyIncome"] - total_exp)

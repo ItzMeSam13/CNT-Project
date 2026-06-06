@@ -17,6 +17,7 @@ from routes.user import router as user_router
 from routes.expenses import router as expenses_router
 from routes.analytics import router as analytics_router
 from routes.auth import router as auth_router
+from routes.playground import router as playground_router
 
 app = FastAPI(
     title="VaultIQ API",
@@ -73,3 +74,4 @@ app.include_router(user_router)
 app.include_router(expenses_router)
 app.include_router(analytics_router)
 app.include_router(auth_router)
+app.include_router(playground_router)

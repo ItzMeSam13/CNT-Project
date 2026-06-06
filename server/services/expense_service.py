@@ -64,12 +64,18 @@ def get_expenses(uid: str) -> list[dict]:
     public_key = get_public_key(keys)
 
     expenses = get_user_expenses(uid)
-    for exp in expenses:
+    from crypto.ou_decrypt import decrypt
+    import concurrent.futures
+
+    def _decrypt_expense(exp):
         enc_amt = exp.get("encryptedAmount")
         if enc_amt:
-            # Decrypt server-side so frontend gets plaintext
-            from crypto.ou_decrypt import decrypt
             exp["amount"] = decrypt(enc_amt, private_key, public_key)
         else:
             exp["amount"] = 0
+        return exp
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        expenses = list(executor.map(_decrypt_expense, expenses))
+
     return expenses

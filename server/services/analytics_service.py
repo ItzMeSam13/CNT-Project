@@ -10,7 +10,7 @@ Flow:
 """
 
 import os
-from db.firestore import get_all_expenses_by_category, get_participant_count, get_all_users
+from db.firestore import get_all_users, get_community_aggregates
 from crypto.ou_keygen import get_keys, get_public_key, get_private_key
 from crypto.ou_homomorphic import homomorphic_add
 from crypto.ou_decrypt import decrypt
@@ -29,18 +29,17 @@ def compute_community_analytics() -> dict:
     public_key = get_public_key(keys)
     private_key = get_private_key(keys)
 
-    # Get all encrypted expenses grouped by category
-    expenses_by_category = get_all_expenses_by_category()
-    participant_count = max(get_participant_count(), 1)
+    # Get pre-aggregated community totals
+    agg = get_community_aggregates() or {"participantCount": 0}
+    participant_count = max(agg.get("participantCount", 0), 1)
 
-    # Compute totals per category via homomorphic addition
+    # Compute totals per category by decrypting the aggregates
     category_totals: dict[str, int] = {}
     for category in CATEGORIES:
-        ciphertexts = expenses_by_category.get(category, [])
-        if ciphertexts:
-            aggregated = homomorphic_add(ciphertexts, public_key)
-            total = decrypt(aggregated, private_key, public_key)
-            category_totals[category] = total
+        cat_key = f"encryptedTotal{category.capitalize()}"
+        enc_total = agg.get(cat_key)
+        if enc_total:
+            category_totals[category] = decrypt(enc_total, private_key, public_key)
         else:
             category_totals[category] = 0
 

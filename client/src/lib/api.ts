@@ -62,3 +62,30 @@ export async function getCommunityAnalytics() {
   const { data } = await api.get("/analytics/community");
   return data as CommunityAnalytics;
 }
+
+/** Playground: Generate Keys */
+export async function playgroundGenerateKeys() {
+  const { data } = await api.get("/playground/generate-keys");
+  return data as {
+    public: { n: string; g: string; h: string };
+    private: { p: string; q: string };
+  };
+}
+
+/** Playground: Encrypt a number */
+export async function playgroundEncrypt(plaintext: number, public_key: { n: string; g: string }) {
+  const { data } = await api.post("/playground/encrypt", { plaintext, public_key });
+  return data as { ciphertext: string };
+}
+
+/** Playground: Decrypt a ciphertext */
+export async function playgroundDecrypt(ciphertext: string, public_key: { n: string; g: string }, private_key: { p: string; q: string }) {
+  const { data } = await api.post("/playground/decrypt", { ciphertext, public_key, private_key });
+  return data as { plaintext: number };
+}
+
+/** Playground: Add two ciphertexts */
+export async function playgroundAdd(ciphertexts: string[], public_key: { n: string; g: string }) {
+  const { data } = await api.post("/playground/add", { ciphertexts, public_key });
+  return data as { ciphertext: string };
+}
